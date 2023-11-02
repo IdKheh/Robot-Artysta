@@ -2,7 +2,6 @@
     <head>
         <title>Projekt Artysta</title>
         <link rel = "stylesheet" href = "../static/style.css/">
-        <script src="../static/script.js/"></script> 
     </head>
     <body>
         <h1>Instrukcja obsługi</h1>
@@ -12,17 +11,38 @@
             Następnie istnieje możliwość wygenerowania obrazka z przejechanej
             trasy. 
         </p>
-        <h3>Czas: {{ time }}
-        </h3>
-            <input id = "b1" type = "button" name="dioda1" value="dioda1">
-            <input id = "b2" type = "button" name="dioda2" value="dioda2">
-            <input id = "b3" type = "button" name="dioda3" value="dioda3">
-            <input id = "b4" type = "button" name="dioda4" value="dioda4">
-         
-         
-         <form method ="post" action = "/">
-            <input type = "button" name="obrazek" value="obrazek">
+         <form action = "/">
+             <input id = "b1" type = "button" value="przód">
+             <input id = "b2" type = "button" value="dioda2">
+             <input id = "b3" type = "button" value="dioda3">
+             <input id = "b4" type = "button" value="dioda4">
+             <br><br>
+             <input id = "obrazek" type = "button" value="Rysuj trasę">
         </form>
+
+    <script>
+        function ExecPythonCommand(pythonCommand) {
+            let request = new XMLHttpRequest();
+            request.open("GET", "/" + pythonCommand, true);
+            request.send();
+        }
+        function wyslij() {
+            let kierunek = [...this.id];
+            ExecPythonCommand("action("+ kierunek[1] +")");
+        }
+        function koniec() {
+            ExecPythonCommand("action("+ 0 +")");
+        }
+        function narysuj(){
+            ExecPythonCommand("draw()");
+        }
+        for(let i=1;i<=4;i++) {
+            document.getElementById('b' + i).addEventListener('mousedown', wyslij);
+            document.getElementById('b' + i).addEventListener('mouseup', koniec);
+        }
+
+        document.getElementById('obrazek').addEventListener("click", narysuj);
+    </script>
         
     </body>
 </html>
