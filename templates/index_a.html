@@ -1,24 +1,31 @@
 <!DOCTYPE html>
     <head>
         <title>Projekt Artysta</title>
-        <link rel = "stylesheet" href = "../static/style.css/">
+        <link rel = "stylesheet" href = "style.css">
+        <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
     </head>
     <body>
-        <h1>Instrukcja obsługi</h1>
-        <p>
-            Poniżej znajdują się 4 przyciski sterujące robotem. Aby 
-            robot ruszył przyciski muszą być naciśnięte i trzymane.
-            Następnie istnieje możliwość wygenerowania obrazka z przejechanej
-            trasy. 
+        <h1>Robot Artysta</h1>
+
+        <h3>Instrukcja obsługi</h3>
+        <p>Sterowanie robotem obsługują poniższe przyciski.
+            Artysta po przejechaniu przez nas wysterowanej trasy
+            narysuje ją po naciśnięciu "rysuj trasę". "Reset"
+            sprawi, że robot stanie się przygotowany do następnej 
+            radosnej wycieczki. "Wyłącz" zdalnie wyłączy robota. 
         </p>
          <form action = "/">
-             <input id = "b1" type = "button" value="przód">
-             <input id = "b2" type = "button" value="dioda2">
-             <input id = "b3" type = "button" value="dioda3">
-             <input id = "b4" type = "button" value="dioda4">
+             <input id = "b1" type = "button" value="przód"><br>
+             <input id = "b2" type = "button" value="lewo">
+             <input id = "b3" type = "button" value="prawo"><br>
+             <input id = "b4" type = "button" value="tył">
              <br><br>
+             
              <input id = "obrazek" type = "button" value="Rysuj trasę">
-        </form>
+             <input id = "obrazek" type = "button" value="Reset">
+             <input id = "obrazek" type = "button" value="Wyłącz">
+            </form>
+        <footer>Wszelkie prawa zastrzeżone. <span style="color: #1E90FF;">&copy;</span> Wiktoria Dębowska 2023 </footer>
 
     <script>
         function ExecPythonCommand(pythonCommand) {
