@@ -2,24 +2,75 @@
     <head>
         <title>Projekt Artysta</title>
         <link rel = "stylesheet" href = "../static/style.css/">
+        <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
     </head>
     <body>
-        <h1>Instrukcja obsługi</h1>
-        <p>
-            Poniżej znajdują się 4 przyciski sterujące robotem. Aby 
-            robot ruszył przyciski muszą być naciśnięte i trzymane.
-            Następnie istnieje możliwość wygenerowania obrazka z przejechanej
-            trasy. 
+        <h1>Robot Artysta</h1>
+
+        <h3>Instrukcja obsługi</h3>
+        <p>Sterowanie robotem obsługują poniższe przyciski.
+            Artysta po przejechaniu przez nas wysterowanej trasy
+            narysuje ją po naciśnięciu "rysuj trasę". "Reset"
+            sprawi, że robot stanie się przygotowany do następnej
+            radosnej wycieczki. "Wyłącz" zdalnie wyłączy robota.
         </p>
-        <h3>Czas: {{ time }}
-        </h3>
-        <form method ="post" action = "/">
-            <input type = "submit" name="dioda1" value = "dioda1">
-            <input type = "submit" name="dioda2" value = "dioda2">
-            <input type = "submit" name="dioda3" value = "dioda3">
-            <input type = "submit" name="dioda4" value = "dioda4">
-            <input type = "submit" name="obrazek" value="obrazek">
-        </form>
-        
+         <form action = "/">
+             <input id = "b1" type = "button" value="&uarr;"><br>
+             <input id = "b2" type = "button" value="&larr;">
+             <input id = "b3" type = "button" value="&rarr;"><br>
+             <input id = "b4" type = "button" value="&darr;">
+             <br><br>
+
+             <input id = "print" type = "button" value="Rysuj trasę">
+             <input id = "reset" type = "button" value="Reset">
+             <input id = "poweroff" type = "button" value="Wyłącz">
+             <input id = "wyswietlanie" type="button" value="Wyświetl obrazek">
+            </form><br>
+        <div style = "clear:both"></div>
+        <div id="obrazek" style = "display: none">Prosze czekac wyswietlam obrazek</div>
+
+
+        <footer>Wszelkie prawa zastrzeżone. <span style="color: #1E90FF;">&copy;</span> Wiktoria Dębowska 2023 </footer>
+
+    <script>
+        function ExecPythonCommand(pythonCommand) {
+            let request = new XMLHttpRequest();
+            request.open("GET", "/" + pythonCommand, true);
+            request.send();
+        }
+        function send() {
+            let direction = [...this.id];
+            ExecPythonCommand("action("+ direction[1] +")");
+        }
+        function end() {
+            ExecPythonCommand("action("+ 0 +")");
+        }
+        function draw() {
+            ExecPythonCommand("draw()")
+            document.getElementById('wyswietlanie').style.display = "block";
+        }
+        function reset(){
+            document.getElementById('obrazek').style.display = "none";
+            document.getElementById('wyswietlanie').style.display = "none";
+            ExecPythonCommand("reset()");
+        }
+        function poweroff(){
+            ExecPythonCommand("poweroff()");
+        }
+        for(let i=1;i<=4;i++) {
+            document.getElementById('b' + i).addEventListener('mousedown', send);
+            document.getElementById('b' + i).addEventListener('mouseup', end);
+        }
+
+        document.getElementById('print').addEventListener("click", draw);
+        document.getElementById('reset').addEventListener("click", reset);
+        document.getElementById('poweroff').addEventListener("click", poweroff);
+        document.getElementById('wyswietlanie').addEventListener("click", function(){
+            console.log("rysuje zdjecie")
+            document.getElementById('obrazek').innerHTML= '<img src="static/img.png"/>';
+            document.getElementById('obrazek').style.display = "block";
+        });
+    </script>
+
     </body>
 </html>
